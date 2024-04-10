@@ -7,6 +7,5 @@ public class PoolableObject : MonoBehaviour
     public virtual void OnDisable()
     {
         Parent.ReturnObjectToPool(this);
-        //Debug.Log("Return to pool");
     }
 }

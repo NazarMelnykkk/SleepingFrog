@@ -3,8 +3,11 @@ using UnityEngine;
 public class CharacterInputHandler : MonoBehaviour
 {
 
-    [SerializeField] private AttackHandler _attackHandler;
-    [SerializeField] private CharacterViewHandler _characterViewHandler;
+    [SerializeField] private CommandHandler _commandHandler;
+    [SerializeField] private AgentAttackObserver _agentAttackObserver;
+
+    [SerializeField] private AgentViewHandler _viewHandler;
+
 
     private void OnEnable()
     {
@@ -18,7 +21,12 @@ public class CharacterInputHandler : MonoBehaviour
 
     private void GetButton(Vector2 direction)
     {
+        _viewHandler.Flip(direction);
+        AttackCommand(direction);
+    }
 
-        _characterViewHandler.Flip(direction);
+    private void AttackCommand(Vector2 direction)
+    {
+        _commandHandler.SetCommand(new Command(CommandType.Attack, _agentAttackObserver.CheckTargets(direction)));
     }
 }

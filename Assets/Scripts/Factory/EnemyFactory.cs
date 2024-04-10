@@ -19,11 +19,11 @@ public class EnemyFactory : AgentFactory
         pool = ObjectPool.CreateInstance(_AgentPrefab, _poolSize);
     }
 
-    public override AIAgentBase Create(Transform targetObject)
+    public override Agent Create(Transform targetObject)
     {
         PoolableObject newItemGO = pool.GetObject();
 
-        AIEnemy newAgent = newItemGO.GetComponent<AIEnemy>();
+        Agent newAgent = newItemGO.GetComponent<Agent>();
 
         newAgent.transform.SetParent(targetObject);
 

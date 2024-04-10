@@ -107,7 +107,7 @@ public class ValuePool
     }
 }
 
-public class Agent : MonoBehaviour, IDamageable
+public class Agent : PoolableObject, IDamageable
 {
 
     public ValuePool HealthPool;
@@ -118,36 +118,57 @@ public class Agent : MonoBehaviour, IDamageable
     public event Action OnDieEvent;
 
     [Header("Configuration")]
-    [SerializeField] private AgentConfigBase _agentConfigBase;
     [SerializeField] private StatsGroup _stats;
+    private AgentConfigBase _agentConfigBase;
+
+    [Header("Components")]
+    [SerializeField] private AgentAnimationController _agentAnimationController;
 
     public void Awake()
     {
         HealthPool = new ValuePool(_stats.Get(Statistic.Health));
-
-        Init();
     }
 
-    public void Init()
+    public void Init(AgentConfigBase newConfig)
     {
+        _agentConfigBase = newConfig;
+
         AddStats(_agentConfigBase.StatsValues);
 
+        GetComponent<AgentAnimationController>().Init(_agentConfigBase.AnimatorOverrideController);
+
         HealthPool.FullRestore();
+
         HealthUpdated();
     }
 
+    private void Start()
+    {
+        HealthUpdated();
+    }
+
+    public override void OnDisable()
+    {
+        if(_agentConfigBase != null)
+        {
+            SubtractStats(_agentConfigBase.StatsValues);
+            _agentConfigBase = null;
+        }
+
+        base.OnDisable();
+    }
+
     public void TakeDamage(int damage)
-    {      
+    {
         if (damage > 0)
         {
             HealthPool.CurrentValue -= damage;
+            HealthUpdated();
             if (HealthPool.CurrentValue <= 0)
             {
                 HealthPool.CurrentValue = 0;
                 Die();
             }
-
-            HealthUpdated();
         }
     }
 
@@ -169,8 +190,15 @@ public class Agent : MonoBehaviour, IDamageable
 
     private void Die()
     {
-        isDead = true;
+        if (isDead == true)
+        {
+            return;
+        }
         OnDieEvent?.Invoke();
+        isDead = true;
+        _agentAnimationController.SetState(AnimationState.Death);
+
+        gameObject.SetActive(false);
     }
 
     private void HealthUpdated()
@@ -189,5 +217,18 @@ public class Agent : MonoBehaviour, IDamageable
     private void StatAdd(StatsValue statsValue)
     {
         _stats.Sum(statsValue);
+    }
+
+    public void SubtractStats(List<StatsValue> statsValues)
+    {
+        for (int i = 0; i < statsValues.Count; i++)
+        {
+            SubtractStats(statsValues[i]);
+        }
+    }
+
+    private void SubtractStats(StatsValue statsValue)
+    {
+        _stats.Subtract(statsValue);
     }
 }

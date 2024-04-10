@@ -17,4 +17,12 @@ MonoBehaviour:
     IsfloatType: 0
     Integer_value: 5
     Float_value: 0
+  - StatisticType: 1
+    IsfloatType: 0
+    Integer_value: 1
+    Float_value: 0
+  - StatisticType: 2
+    IsfloatType: 1
+    Integer_value: 0
+    Float_value: 0
   AnimatorOverrideController: {fileID: 22100000, guid: d461e8ab752ecf743a1049f37283c1ec, type: 2}

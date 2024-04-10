@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fba0e54996245584eb6a920ed63f5db6, type: 3}
+  m_Name: Sceleton
+  m_EditorClassIdentifier: 
+  StatsValues:
+  - StatisticType: 0
+    IsfloatType: 0
+    Integer_value: 1
+    Float_value: 0
+  - StatisticType: 1
+    IsfloatType: 0
+    Integer_value: 1
+    Float_value: 0
+  - StatisticType: 2
+    IsfloatType: 1
+    Integer_value: 0
+    Float_value: 1.1
+  AnimatorOverrideController: {fileID: 22100000, guid: 39420ae7884d2f743bff206436f5e127, type: 2}

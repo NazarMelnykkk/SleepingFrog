@@ -34,7 +34,6 @@ public class InputController : MonoBehaviour
     {
         Vector2 direction = context.ReadValue<Vector2>();
         OnAttackDirectionButtonPerformedEvent?.Invoke(direction);
-        Debug.Log(direction);
     }
 
 }

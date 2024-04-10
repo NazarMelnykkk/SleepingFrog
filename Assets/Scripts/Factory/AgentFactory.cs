@@ -10,11 +10,11 @@ public class AgentFactory : MonoBehaviour
 
     public ObjectPool pool;
 
-    public virtual AIAgentBase Create(Transform targetObject)
+    public virtual Agent Create(Transform targetObject)
     {
         PoolableObject newItemGO = pool.GetObject();
 
-        AIAgentBase newAgent = newItemGO.GetComponent<AIAgentBase>();
+        Agent newAgent = newItemGO.GetComponent<Agent>();
 
         newAgent.transform.SetParent(targetObject);
 
