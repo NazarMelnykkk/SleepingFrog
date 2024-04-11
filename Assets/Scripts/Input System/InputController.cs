@@ -26,11 +26,16 @@ public class InputController : MonoBehaviour
 
     private void OnEnable()
     {
-        InputActions.Character.AttackDirection.performed += OnLeftButtonPerformed;
+        InputActions.Character.AttackDirection.performed += OnAttackDirectionButtonPerformed;
+    }
+
+    private void OnDisable()
+    {
+        InputActions.Character.AttackDirection.performed -= OnAttackDirectionButtonPerformed;
     }
 
     public event Action<Vector2> OnAttackDirectionButtonPerformedEvent;
-    private void OnLeftButtonPerformed(InputAction.CallbackContext context)
+    private void OnAttackDirectionButtonPerformed(InputAction.CallbackContext context)
     {
         Vector2 direction = context.ReadValue<Vector2>();
         OnAttackDirectionButtonPerformedEvent?.Invoke(direction);

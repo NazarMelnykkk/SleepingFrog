@@ -147,6 +147,11 @@ public class Agent : PoolableObject, IDamageable
         HealthUpdated();
     }
 
+    private void OnEnable()
+    {
+        HealthPool.FullRestore();
+    }
+
     public override void OnDisable()
     {
         if(_agentConfigBase != null)
